@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.github
+*.md
+*.log
+.env
+.env.*
+skysafe.db
+skysafe.db-journal
+tsconfig.tsbuildinfo
+SYSTEM_DESIGN.md
+FRONTEND.md
+test-runner.ts
+test_routes.ts
+build.log

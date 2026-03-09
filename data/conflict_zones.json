@@ -1,0 +1,277 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "country": "AF",
+        "severity": "CRITICAL"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              60.5,
+              29.0
+            ],
+            [
+              74.0,
+              29.0
+            ],
+            [
+              74.0,
+              38.6
+            ],
+            [
+              60.5,
+              38.6
+            ],
+            [
+              60.5,
+              29.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "country": "IR",
+        "severity": "HIGH"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              44.0,
+              25.0
+            ],
+            [
+              63.5,
+              25.0
+            ],
+            [
+              63.5,
+              40.0
+            ],
+            [
+              44.0,
+              40.0
+            ],
+            [
+              44.0,
+              25.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "country": "UA",
+        "severity": "CRITICAL"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              22.0,
+              44.3
+            ],
+            [
+              40.2,
+              44.3
+            ],
+            [
+              40.2,
+              52.4
+            ],
+            [
+              22.0,
+              52.4
+            ],
+            [
+              22.0,
+              44.3
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "country": "SY",
+        "severity": "CRITICAL"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.5,
+              32.3
+            ],
+            [
+              42.4,
+              32.3
+            ],
+            [
+              42.4,
+              37.3
+            ],
+            [
+              35.5,
+              37.3
+            ],
+            [
+              35.5,
+              32.3
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "country": "YE",
+        "severity": "CRITICAL"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              42.5,
+              12.0
+            ],
+            [
+              54.5,
+              12.0
+            ],
+            [
+              54.5,
+              19.0
+            ],
+            [
+              42.5,
+              19.0
+            ],
+            [
+              42.5,
+              12.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "country": "SO",
+        "severity": "CRITICAL"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              40.9,
+              -1.7
+            ],
+            [
+              51.5,
+              -1.7
+            ],
+            [
+              51.5,
+              12.0
+            ],
+            [
+              40.9,
+              12.0
+            ],
+            [
+              40.9,
+              -1.7
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "country": "SD",
+        "severity": "HIGH"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              21.8,
+              8.7
+            ],
+            [
+              38.6,
+              8.7
+            ],
+            [
+              38.6,
+              22.2
+            ],
+            [
+              21.8,
+              22.2
+            ],
+            [
+              21.8,
+              8.7
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "country": "IQ",
+        "severity": "CRITICAL"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              38.8,
+              29.0
+            ],
+            [
+              48.6,
+              29.0
+            ],
+            [
+              48.6,
+              37.4
+            ],
+            [
+              38.8,
+              37.4
+            ],
+            [
+              38.8,
+              29.0
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

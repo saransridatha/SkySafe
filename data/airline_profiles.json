@@ -1,0 +1,202 @@
+[
+  {
+    "code": "AIC",
+    "name": "Air India",
+    "safetyRank": 45,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 3,
+    "averageFleetAgeYears": 9.1,
+    "riskBand": "MEDIUM"
+  },
+  {
+    "code": "BAW",
+    "name": "British Airways",
+    "safetyRank": 20,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 1,
+    "averageFleetAgeYears": 10.2,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "KLM",
+    "name": "KLM Royal Dutch Airlines",
+    "safetyRank": 15,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 1,
+    "averageFleetAgeYears": 11.2,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "UAE",
+    "name": "Emirates",
+    "safetyRank": 10,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 9.8,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "DLH",
+    "name": "Lufthansa",
+    "safetyRank": 12,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 1,
+    "averageFleetAgeYears": 10.5,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "SIA",
+    "name": "Singapore Airlines",
+    "safetyRank": 3,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 1,
+    "averageFleetAgeYears": 7.6,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "QTR",
+    "name": "Qatar Airways",
+    "safetyRank": 5,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 6.2,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "AFR",
+    "name": "Air France",
+    "safetyRank": 22,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 1,
+    "averageFleetAgeYears": 12.3,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "THY",
+    "name": "Turkish Airlines",
+    "safetyRank": 30,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 2,
+    "averageFleetAgeYears": 8.4,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "ETH",
+    "name": "Ethiopian Airlines",
+    "safetyRank": 55,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 2,
+    "averageFleetAgeYears": 8.9,
+    "riskBand": "MEDIUM"
+  },
+  {
+    "code": "CPA",
+    "name": "Cathay Pacific",
+    "safetyRank": 8,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 10.1,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "QFA",
+    "name": "Qantas",
+    "safetyRank": 1,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 11.8,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "DAL",
+    "name": "Delta Air Lines",
+    "safetyRank": 7,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 1,
+    "averageFleetAgeYears": 15.2,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "UAL",
+    "name": "United Airlines",
+    "safetyRank": 18,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 2,
+    "averageFleetAgeYears": 14.8,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "AAL",
+    "name": "American Airlines",
+    "safetyRank": 16,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 2,
+    "averageFleetAgeYears": 13.1,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "RYR",
+    "name": "Ryanair",
+    "safetyRank": 25,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 9.5,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "EZY",
+    "name": "easyJet",
+    "safetyRank": 28,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 8.7,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "SWR",
+    "name": "Swiss International Air Lines",
+    "safetyRank": 11,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 12.0,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "ANA",
+    "name": "All Nippon Airways",
+    "safetyRank": 4,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 9.4,
+    "riskBand": "LOW"
+  },
+  {
+    "code": "JAL",
+    "name": "Japan Airlines",
+    "safetyRank": 6,
+    "iosa": true,
+    "bannedInEU": false,
+    "incidentsLast10Y": 0,
+    "averageFleetAgeYears": 10.7,
+    "riskBand": "LOW"
+  }
+]

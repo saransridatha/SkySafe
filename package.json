@@ -1,0 +1,37 @@
+{
+  "name": "skysafe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SkySafe risk intelligence platform",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "aviation",
+    "risk",
+    "nextjs",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "better-sqlite3": "11.8.1",
+    "leaflet": "^1.9.4",
+    "next": "14.2.32",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "recharts": "^3.8.0",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.11",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "22.13.14",
+    "@types/react": "18.3.18",
+    "typescript": "5.8.2"
+  }
+}

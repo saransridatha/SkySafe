@@ -1,0 +1,136 @@
+/* Explore Page */
+
+.explore-page {
+    padding: 2rem 0 4rem;
+}
+
+.explore-header {
+    margin-bottom: 2rem;
+}
+
+.explore-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.25rem;
+}
+
+.explore-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Tabs */
+.explore-tabs {
+    display: flex;
+    gap: 0.125rem;
+    margin-bottom: 1.5rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 0.1875rem;
+    width: fit-content;
+}
+
+.explore-tab {
+    padding: 0.375rem 1rem;
+    border-radius: var(--r-sm);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all var(--ease);
+}
+
+.explore-tab.active {
+    background: var(--bg-surface);
+    color: var(--text);
+}
+
+.explore-tab:hover:not(.active) {
+    color: var(--text);
+}
+
+/* Data table style grid */
+.data-grid {
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+}
+
+.data-grid-header {
+    display: grid;
+    padding: 0.625rem 1rem;
+    background: var(--bg-raised);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.data-grid-row {
+    display: grid;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.875rem;
+    align-items: center;
+    transition: background var(--ease);
+}
+
+.data-grid-row:last-child {
+    border-bottom: none;
+}
+
+.data-grid-row:hover {
+    background: var(--bg-raised);
+}
+
+/* Aircraft grid columns */
+.aircraft-cols {
+    grid-template-columns: 1.5fr 2fr 0.75fr 0.75fr 0.75fr 0.75fr 0.75fr;
+}
+
+/* Airline grid columns */
+.airline-cols {
+    grid-template-columns: 0.75fr 2fr 0.75fr 0.75fr 0.75fr 0.75fr 0.75fr;
+}
+
+.data-cell-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: var(--accent);
+}
+
+@media (max-width: 1024px) {
+    .aircraft-cols {
+        grid-template-columns: 1fr 1.5fr 0.75fr 0.75fr 0.75fr;
+    }
+
+    .airline-cols {
+        grid-template-columns: 0.75fr 1.5fr 0.75fr 0.75fr 0.75fr;
+    }
+
+    .aircraft-cols .hide-md,
+    .airline-cols .hide-md {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .aircraft-cols {
+        grid-template-columns: 1fr 1.5fr 0.75fr;
+    }
+
+    .airline-cols {
+        grid-template-columns: 0.75fr 1.5fr 0.75fr;
+    }
+
+    .aircraft-cols .hide-sm,
+    .airline-cols .hide-sm {
+        display: none;
+    }
+}

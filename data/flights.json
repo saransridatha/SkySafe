@@ -1,0 +1,43 @@
+[
+  {
+    "queryKeys": ["AI101", "AI 101", "DEL-LHR", "DEL LHR"],
+    "flightNumber": "AI101",
+    "airline": "AIC",
+    "airlineName": "Air India",
+    "aircraftType": "B788",
+    "origin": "DEL",
+    "destination": "LHR",
+    "departureTime": "2026-03-09T09:30:00Z",
+    "arrivalTime": "2026-03-09T17:10:00Z",
+    "waypoints": [
+      [77.1025, 28.5562],
+      [66.975, 24.86],
+      [69.2075, 34.5553],
+      [51.389, 35.6892],
+      [28.9784, 41.0082],
+      [13.405, 52.52],
+      [-0.4543, 51.47]
+    ],
+    "countries": ["IN", "PK", "AF", "IR", "TR", "DE", "GB"]
+  },
+  {
+    "queryKeys": ["BA142", "BA 142"],
+    "flightNumber": "BA142",
+    "airline": "BAW",
+    "airlineName": "British Airways",
+    "aircraftType": "A35K",
+    "origin": "DEL",
+    "destination": "LHR",
+    "departureTime": "2026-03-09T13:10:00Z",
+    "arrivalTime": "2026-03-09T20:50:00Z",
+    "waypoints": [
+      [77.1025, 28.5562],
+      [69.0, 30.2],
+      [44.0, 37.1],
+      [26.1, 40.6],
+      [9.2, 48.3],
+      [-0.4543, 51.47]
+    ],
+    "countries": ["IN", "PK", "IR", "TR", "DE", "GB"]
+  }
+]

@@ -1,0 +1,137 @@
+[
+  {
+    "icaoType": "B788",
+    "displayName": "Boeing 787-8 Dreamliner",
+    "fleetSize": 1120,
+    "averageFleetAgeYears": 7.2,
+    "incidents": 11,
+    "hullLosses": 0,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "B789",
+    "displayName": "Boeing 787-9 Dreamliner",
+    "fleetSize": 1050,
+    "averageFleetAgeYears": 5.8,
+    "incidents": 6,
+    "hullLosses": 0,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "A35K",
+    "displayName": "Airbus A350-1000",
+    "fleetSize": 150,
+    "averageFleetAgeYears": 4.6,
+    "incidents": 2,
+    "hullLosses": 0,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "A359",
+    "displayName": "Airbus A350-900",
+    "fleetSize": 580,
+    "averageFleetAgeYears": 5.1,
+    "incidents": 5,
+    "hullLosses": 0,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "B738",
+    "displayName": "Boeing 737-800",
+    "fleetSize": 5200,
+    "averageFleetAgeYears": 12.8,
+    "incidents": 98,
+    "hullLosses": 23,
+    "riskBand": "MEDIUM"
+  },
+  {
+    "icaoType": "B739",
+    "displayName": "Boeing 737-900ER",
+    "fleetSize": 520,
+    "averageFleetAgeYears": 10.3,
+    "incidents": 8,
+    "hullLosses": 1,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "B77W",
+    "displayName": "Boeing 777-300ER",
+    "fleetSize": 830,
+    "averageFleetAgeYears": 11.5,
+    "incidents": 12,
+    "hullLosses": 2,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "B748",
+    "displayName": "Boeing 747-8",
+    "fleetSize": 155,
+    "averageFleetAgeYears": 10.2,
+    "incidents": 3,
+    "hullLosses": 0,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "A388",
+    "displayName": "Airbus A380-800",
+    "fleetSize": 254,
+    "averageFleetAgeYears": 12.4,
+    "incidents": 15,
+    "hullLosses": 0,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "A320",
+    "displayName": "Airbus A320",
+    "fleetSize": 4800,
+    "averageFleetAgeYears": 14.2,
+    "incidents": 82,
+    "hullLosses": 18,
+    "riskBand": "MEDIUM"
+  },
+  {
+    "icaoType": "A20N",
+    "displayName": "Airbus A320neo",
+    "fleetSize": 3200,
+    "averageFleetAgeYears": 3.8,
+    "incidents": 12,
+    "hullLosses": 1,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "A321",
+    "displayName": "Airbus A321",
+    "fleetSize": 2100,
+    "averageFleetAgeYears": 11.7,
+    "incidents": 25,
+    "hullLosses": 4,
+    "riskBand": "LOW"
+  },
+  {
+    "icaoType": "A332",
+    "displayName": "Airbus A330-200",
+    "fleetSize": 660,
+    "averageFleetAgeYears": 15.1,
+    "incidents": 18,
+    "hullLosses": 3,
+    "riskBand": "MEDIUM"
+  },
+  {
+    "icaoType": "B763",
+    "displayName": "Boeing 767-300ER",
+    "fleetSize": 580,
+    "averageFleetAgeYears": 22.5,
+    "incidents": 28,
+    "hullLosses": 6,
+    "riskBand": "MEDIUM"
+  },
+  {
+    "icaoType": "E190",
+    "displayName": "Embraer E190",
+    "fleetSize": 580,
+    "averageFleetAgeYears": 13.4,
+    "incidents": 10,
+    "hullLosses": 1,
+    "riskBand": "LOW"
+  }
+]

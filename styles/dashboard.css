@@ -1,0 +1,209 @@
+/* Dashboard / Report Page */
+
+.report-page {
+  min-height: 100vh;
+  padding: 2rem 0 4rem;
+}
+
+.report-header {
+  margin-bottom: 2rem;
+}
+
+.report-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.report-back {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  transition: color var(--ease);
+  text-decoration: none;
+}
+
+.report-back:hover {
+  color: var(--text);
+}
+
+.report-flight-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.report-flight-title .mono {
+  color: var(--accent);
+}
+
+.report-meta {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* Results layout */
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.results-grid-full {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+/* Cards */
+.card {
+  background: var(--bg);
+  padding: 1.5rem;
+  transition: background var(--ease);
+}
+
+.card:hover {
+  background: var(--bg-raised);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.card-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-title-icon {
+  font-size: 1rem;
+}
+
+/* Country cards row */
+.country-cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+/* Loading */
+.loading-state {
+  padding: 2rem 0;
+}
+
+.loading-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-raised) 50%, var(--bg-surface) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--r-sm);
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-line {
+  width: 100%;
+  height: 0.875rem;
+  margin-bottom: 0.625rem;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+.skeleton-line.small {
+  width: 40%;
+}
+
+.skeleton-block {
+  width: 100%;
+  height: 200px;
+}
+
+/* Error */
+.error-state {
+  padding: 2rem;
+  background: var(--red-bg);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: var(--r-lg);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.error-state-title {
+  font-weight: 600;
+  color: var(--red);
+  margin-bottom: 0.25rem;
+}
+
+.error-state-message {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.retry-button {
+  padding: 0.4375rem 1rem;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-md);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: opacity var(--ease);
+}
+
+.retry-button:hover {
+  opacity: 0.85;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .country-cards-row {
+    grid-template-columns: 1fr;
+  }
+}

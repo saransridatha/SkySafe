@@ -1,0 +1,177 @@
+[
+  {
+    "country": "IN",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "PK",
+    "baselineRisk": "MEDIUM",
+    "riskWeight": 2
+  },
+  {
+    "country": "AF",
+    "baselineRisk": "CRITICAL",
+    "riskWeight": 4
+  },
+  {
+    "country": "IR",
+    "baselineRisk": "HIGH",
+    "riskWeight": 3
+  },
+  {
+    "country": "TR",
+    "baselineRisk": "MEDIUM",
+    "riskWeight": 2
+  },
+  {
+    "country": "DE",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "GB",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "US",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "FR",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "AE",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "SA",
+    "baselineRisk": "MEDIUM",
+    "riskWeight": 2
+  },
+  {
+    "country": "IQ",
+    "baselineRisk": "CRITICAL",
+    "riskWeight": 4
+  },
+  {
+    "country": "SY",
+    "baselineRisk": "CRITICAL",
+    "riskWeight": 4
+  },
+  {
+    "country": "UA",
+    "baselineRisk": "CRITICAL",
+    "riskWeight": 4
+  },
+  {
+    "country": "RU",
+    "baselineRisk": "HIGH",
+    "riskWeight": 3
+  },
+  {
+    "country": "CN",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "JP",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "EG",
+    "baselineRisk": "MEDIUM",
+    "riskWeight": 2
+  },
+  {
+    "country": "IL",
+    "baselineRisk": "HIGH",
+    "riskWeight": 3
+  },
+  {
+    "country": "JO",
+    "baselineRisk": "MEDIUM",
+    "riskWeight": 2
+  },
+  {
+    "country": "LB",
+    "baselineRisk": "HIGH",
+    "riskWeight": 3
+  },
+  {
+    "country": "YE",
+    "baselineRisk": "CRITICAL",
+    "riskWeight": 4
+  },
+  {
+    "country": "SO",
+    "baselineRisk": "CRITICAL",
+    "riskWeight": 4
+  },
+  {
+    "country": "SD",
+    "baselineRisk": "HIGH",
+    "riskWeight": 3
+  },
+  {
+    "country": "LY",
+    "baselineRisk": "HIGH",
+    "riskWeight": 3
+  },
+  {
+    "country": "SG",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "AU",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "NL",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "CH",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "QA",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "TH",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "MY",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "OM",
+    "baselineRisk": "LOW",
+    "riskWeight": 1
+  },
+  {
+    "country": "ET",
+    "baselineRisk": "MEDIUM",
+    "riskWeight": 2
+  },
+  {
+    "country": "KE",
+    "baselineRisk": "MEDIUM",
+    "riskWeight": 2
+  }
+]
