@@ -13,6 +13,30 @@ const THREAT_KEYWORDS = [
   "security"
 ];
 
+const COUNTRY_NAMES: Record<string, string> = {
+  AF: "Afghanistan", AE: "United Arab Emirates", AU: "Australia",
+  BD: "Bangladesh", BG: "Bulgaria", BR: "Brazil", CA: "Canada",
+  CD: "Congo", CH: "Switzerland", CN: "China", CZ: "Czech Republic",
+  DE: "Germany", DK: "Denmark", EG: "Egypt", ES: "Spain",
+  ET: "Ethiopia", FI: "Finland", FR: "France", GB: "United Kingdom",
+  GR: "Greece", HU: "Hungary", ID: "Indonesia", IE: "Ireland",
+  IL: "Israel", IN: "India", IQ: "Iraq", IR: "Iran", IT: "Italy",
+  JO: "Jordan", JP: "Japan", KE: "Kenya", KR: "South Korea",
+  KZ: "Kazakhstan", LB: "Lebanon", LK: "Sri Lanka", LY: "Libya",
+  MM: "Myanmar", MX: "Mexico", MY: "Malaysia", NL: "Netherlands",
+  NO: "Norway", NP: "Nepal", OM: "Oman", PH: "Philippines",
+  PK: "Pakistan", PL: "Poland", PT: "Portugal", QA: "Qatar",
+  RO: "Romania", RU: "Russia", SA: "Saudi Arabia", SD: "Sudan",
+  SE: "Sweden", SG: "Singapore", SO: "Somalia", SY: "Syria",
+  TH: "Thailand", TN: "Tunisia", TR: "Turkey", TW: "Taiwan",
+  UA: "Ukraine", US: "United States", UZ: "Uzbekistan",
+  VN: "Vietnam", YE: "Yemen", ZA: "South Africa"
+};
+
+function getCountryName(code: string): string {
+  return COUNTRY_NAMES[code] || code;
+}
+
 const cache = new TTLCache<NewsIntelligence>(500);
 const TTL_MS = 60 * 60 * 1000; // 1 hour cache for news
 
@@ -26,7 +50,8 @@ async function fetchGNews(country: string): Promise<NewsHeadline[]> {
   if (!apiKey || apiKey === "your_gnews_api_key_here") return [];
 
   try {
-    const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(country + " aviation security OR conflict")}&lang=en&max=5&apikey=${apiKey}`;
+    const countryName = getCountryName(country);
+    const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(countryName + " aviation security OR conflict")}&lang=en&max=5&apikey=${apiKey}`;
     const response = await fetch(url);
     if (!response.ok) throw new Error(`GNews API error: ${response.statusText}`);
     
@@ -48,7 +73,8 @@ async function fetchNewsAPI(country: string): Promise<NewsHeadline[]> {
   if (!apiKey || apiKey === "your_newsapi_key_here") return [];
 
   try {
-    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(country + " aviation security")}&pageSize=5&apiKey=${apiKey}`;
+    const countryName = getCountryName(country);
+    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(countryName + " aviation security")}&pageSize=5&apiKey=${apiKey}`;
     const response = await fetch(url);
     if (!response.ok) throw new Error(`NewsAPI error: ${response.statusText}`);
     
