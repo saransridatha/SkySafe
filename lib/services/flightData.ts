@@ -185,18 +185,19 @@ function generateRoute(origin: string, dest: string): { waypoints: Coordinate[];
   const originCountry = AIRPORT_COUNTRIES[origin] || "US";
   const destCountry = AIRPORT_COUNTRIES[dest] || "US";
 
-  // Handle date-line crossing (e.g. HND→SFO)
+  // Handle date-line crossing for routes that span the International Date Line
+  // (e.g. HND→SFO goes eastward across the Pacific, not westward through Europe)
   let lngDiff = destCoord[0] - originCoord[0];
   if (Math.abs(lngDiff) > 180) {
     lngDiff = lngDiff > 0 ? lngDiff - 360 : lngDiff + 360;
   }
 
-  const numPoints = 7;
+  const numWaypoints = 7;
   const waypoints: Coordinate[] = [];
   const countries: string[] = [];
 
-  for (let i = 0; i < numPoints; i++) {
-    const t = i / (numPoints - 1);
+  for (let i = 0; i < numWaypoints; i++) {
+    const t = i / (numWaypoints - 1);
     let lng = originCoord[0] + t * lngDiff;
     const lat = originCoord[1] + t * (destCoord[1] - originCoord[1]);
 
@@ -208,7 +209,7 @@ function generateRoute(origin: string, dest: string): { waypoints: Coordinate[];
 
     if (i === 0) {
       countries.push(originCountry);
-    } else if (i === numPoints - 1) {
+    } else if (i === numWaypoints - 1) {
       countries.push(destCountry);
     } else {
       const mapped = mapCoordinateToCountry([lng, lat]);
