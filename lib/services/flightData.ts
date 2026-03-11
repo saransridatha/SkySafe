@@ -296,7 +296,7 @@ async function fetchAirLabsAPI(query: string): Promise<FlightDetails | null> {
     return {
       flightNumber: f.flight_iata || query,
       airline: f.airline_icao || "UNK",
-      airlineName: f.airline_icao || "Unknown Airline",
+      airlineName: f.airline_name || f.airline_iata || f.airline_icao || "Unknown Airline",
       aircraftType: f.aircraft_icao || "B788",
       origin,
       destination: dest,
@@ -311,14 +311,12 @@ async function fetchAirLabsAPI(query: string): Promise<FlightDetails | null> {
   }
 }
 
-const MOCK_ROUTES = [
-  { origin: "DEL", destination: "LHR", waypoints: [[77.1025, 28.5562], [74.3, 31.5], [69.2, 34.5], [51.4, 35.7], [32.9, 39.9], [11.8, 48.1], [-0.4543, 51.47]], countries: ["IN", "PK", "AF", "IR", "TR", "DE", "GB"] },
-  { origin: "JFK", destination: "LHR", waypoints: [[-73.7781, 40.6413], [-55.0, 47.0], [-35.0, 51.0], [-15.0, 53.0], [-5.0, 52.0], [-0.4543, 51.47]], countries: ["US", "US", "US", "IE", "IE", "GB"] },
-  { origin: "DXB", destination: "CDG", waypoints: [[55.3644, 25.2532], [50.0, 29.0], [44.0, 33.0], [35.0, 38.0], [20.0, 42.0], [10.0, 45.5], [2.5479, 49.0097]], countries: ["AE", "IR", "IQ", "TR", "GR", "IT", "FR"] },
-  { origin: "SIN", destination: "SYD", waypoints: [[103.9893, 1.3644], [110.0, -5.0], [120.0, -12.0], [130.0, -20.0], [140.0, -28.0], [151.1772, -33.9461]], countries: ["SG", "ID", "ID", "AU", "AU", "AU"] },
-  { origin: "HND", destination: "SFO", waypoints: [[139.7798, 35.5494], [155.0, 40.0], [170.0, 43.0], [-170.0, 45.0], [-150.0, 42.0], [-135.0, 39.0], [-122.3790, 37.6213]], countries: ["JP", "JP", "JP", "US", "US", "US", "US"] },
-  { origin: "AMS", destination: "JNB", waypoints: [[4.7683, 52.3105], [5.0, 45.0], [8.0, 35.0], [15.0, 20.0], [20.0, 5.0], [25.0, -10.0], [28.2411, -26.1367]], countries: ["NL", "FR", "TN", "LY", "CD", "CD", "ZA"] }
-];
+const MOCK_ROUTE_KEYS = ["DEL-LHR", "JFK-LHR", "DXB-CDG", "SIN-SYD", "HND-SFO", "AMS-JNB"];
+const MOCK_ROUTES = MOCK_ROUTE_KEYS.map((key) => {
+  const route = KNOWN_ROUTES[key];
+  const [origin, destination] = key.split("-");
+  return { origin, destination, waypoints: route.waypoints, countries: route.countries };
+});
 
 function generateMockFlight(query: string): FlightDetails {
   const normalized = normalizeQuery(query);
@@ -371,23 +369,26 @@ export async function searchFlight(query: string): Promise<FlightDetails> {
     return persistent;
   }
 
-  // 3. Primary real-time API (AviationStack)
-  const realTime = await fetchAviationStack(key);
-  if (realTime) {
-    setPersistentFlight(key, realTime); // Store permanently
-    cache.set(key, realTime, FLIGHT_TTL_MS);
-    return realTime;
+  // 3. Real-time APIs (only for flight numbers, not route queries)
+  if (isFlightNumber) {
+    // 3a. Primary real-time API (AviationStack)
+    const realTime = await fetchAviationStack(key);
+    if (realTime) {
+      setPersistentFlight(key, realTime); // Store permanently
+      cache.set(key, realTime, FLIGHT_TTL_MS);
+      return realTime;
+    }
+
+    // 3b. Fallback real-time API (AirLabs)
+    const fallback = await fetchAirLabsAPI(key);
+    if (fallback) {
+      setPersistentFlight(key, fallback);
+      cache.set(key, fallback, FLIGHT_TTL_MS);
+      return fallback;
+    }
   }
 
-  // 4. Fallback real-time API (AirLabs)
-  const fallback = await fetchAirLabsAPI(key);
-  if (fallback) {
-    setPersistentFlight(key, fallback);
-    cache.set(key, fallback, FLIGHT_TTL_MS);
-    return fallback;
-  }
-
-  // 5. Static mock data
+  // 4. Static mock data
   const all = flights as FlightRecord[];
   const found = all.find((item) =>
     item.queryKeys.map(normalizeQuery).includes(key)
@@ -410,7 +411,7 @@ export async function searchFlight(query: string): Promise<FlightDetails> {
     return result;
   }
 
-  // 6. Deterministic fallback generator
+  // 5. Deterministic fallback generator
   const result = generateMockFlight(query);
   cache.set(key, result, FLIGHT_TTL_MS);
   return result;

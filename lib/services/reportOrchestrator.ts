@@ -26,7 +26,7 @@ export async function buildRiskReport(flightQuery: string): Promise<AggregatedRi
       waypoints: flight.waypoints,
       countries: flight.countries
     }),
-    getNewsIntel(flight.countries)
+    getNewsIntel(Array.from(new Set(flight.countries)))
   ]);
 
   const riskScore = await scoreRisk({
