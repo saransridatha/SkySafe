@@ -11,3 +11,22 @@ services:
     environment:
       - NODE_ENV=production
     restart: unless-stopped
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.11
+    container_name: skysafe_db
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ilyushin76
+      MARIADB_DATABASE: skysafe
+      MARIADB_USER: skysafe_user
+      MARIADB_PASSWORD: ilyushin76
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:
