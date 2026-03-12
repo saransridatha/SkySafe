@@ -4,9 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Shield, Activity, Radio, Search } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { AuthModal } from "./AuthModal";
-import "../styles/navbar.css";
 
 export function Navbar() {
     const router = useRouter();
@@ -40,63 +40,99 @@ export function Navbar() {
     };
 
     const links = [
-        { href: "/", label: "Home" },
-        { href: "/explore", label: "Explore" },
-        { href: "/about", label: "About" },
+        { href: "/", label: "COMMAND" },
+        { href: "/explore", label: "EXPLORE" },
+        { href: "/about", label: "ABOUT" },
     ];
 
     return (
         <>
-            <nav className="navbar">
-                <div className="navbar-inner">
-                    <Link href="/" className="navbar-brand">
-                        <span className="navbar-logo">
-                            Sky<span>Safe</span>
+            <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
+                <div className="flex items-center justify-between px-4 h-12">
+                    {/* Left - Logo & Brand */}
+                    <Link href="/" className="flex items-center gap-2">
+                        <Shield className="h-5 w-5 text-electric" />
+                        <span className="font-heading text-sm font-bold tracking-[0.2em] text-foreground">
+                            SKYSAFE
                         </span>
+                        <div className="h-4 w-px bg-border ml-2" />
+                        <span className="font-mono-label text-[9px] text-muted-foreground tracking-wider">v4.2.1</span>
                     </Link>
 
-                    <ul className="navbar-links">
-                        {links.map((l) => (
-                            <li key={l.href}>
-                                <Link
-                                    href={l.href}
-                                    className={`navbar-link${pathname === l.href ? " active" : ""}`}
-                                >
-                                    {l.label}
-                                </Link>
-                            </li>
+                    {/* Center - Nav Links */}
+                    <div className="hidden md:flex items-center gap-1">
+                        {links.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={`font-mono-label text-[10px] tracking-[0.15em] px-4 py-1 border transition-all ${
+                                    pathname === link.href
+                                        ? "border-electric/40 bg-electric/10 text-electric"
+                                        : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                                }`}
+                            >
+                                {link.label}
+                            </Link>
                         ))}
-                    </ul>
+                    </div>
 
-                    <form onSubmit={handleSubmit} className="navbar-search">
-                        <span className="navbar-search-icon">🔍</span>
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            className="navbar-search-input"
-                            placeholder="Search flight..."
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            autoComplete="off"
-                        />
-                        <kbd className="navbar-search-kbd">/</kbd>
-                    </form>
+                    {/* Right section */}
+                    <div className="flex items-center gap-4">
+                        {/* Search */}
+                        <form onSubmit={handleSubmit} className="hidden sm:flex items-center gap-2">
+                            <div className="flex items-center border border-border bg-background/50 px-2 py-1">
+                                <Search className="w-3 h-3 text-muted-foreground" />
+                                <input
+                                    ref={inputRef}
+                                    type="text"
+                                    className="bg-transparent border-none outline-none font-mono-data text-[10px] text-foreground placeholder:text-muted-foreground w-24 ml-2 tracking-wider"
+                                    placeholder="SEARCH..."
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    autoComplete="off"
+                                />
+                                <kbd className="font-mono-label text-[8px] text-muted-foreground border border-border px-1">/</kbd>
+                            </div>
+                        </form>
 
-                    <div className="navbar-auth">
+                        {/* Status indicators */}
+                        <div className="hidden lg:flex items-center gap-4">
+                            <div className="flex items-center gap-1.5">
+                                <Radio className="w-3 h-3 text-neon pulse-glow" />
+                                <span className="font-mono-label text-[9px] text-neon tracking-wider">ONLINE</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <Activity className="w-3 h-3 text-electric" />
+                                <span className="font-mono-data text-[9px] text-muted-foreground">99.97%</span>
+                            </div>
+                        </div>
+
+                        {/* Auth */}
                         {user ? (
-                            <div className="navbar-user">
-                                <span className="navbar-user-name">{user.name}</span>
-                                <button onClick={logout} className="navbar-auth-btn navbar-logout-btn">
-                                    Sign Out
+                            <div className="flex items-center gap-2">
+                                <span className="font-mono-label text-[9px] text-electric tracking-wider hidden sm:inline">
+                                    {user.name.toUpperCase()}
+                                </span>
+                                <button 
+                                    onClick={logout} 
+                                    className="font-mono-label text-[9px] text-muted-foreground border border-border px-2 py-1 hover:border-destructive hover:text-destructive transition-colors tracking-wider"
+                                >
+                                    LOGOUT
                                 </button>
                             </div>
                         ) : (
-                            <button onClick={() => setShowAuth(true)} className="navbar-auth-btn">
-                                Sign In
+                            <button 
+                                onClick={() => setShowAuth(true)} 
+                                className="font-mono-label text-[9px] text-electric border border-electric/40 px-3 py-1 hover:bg-electric/10 transition-colors tracking-wider"
+                            >
+                                ACCESS
                             </button>
                         )}
                     </div>
                 </div>
+
+                {/* Bottom thin data bar */}
+                <div className="h-px w-full bg-gradient-to-r from-transparent via-electric/30 to-transparent" />
             </nav>
 
             <AuthModal isOpen={showAuth} onClose={() => setShowAuth(false)} />

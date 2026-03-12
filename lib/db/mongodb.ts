@@ -1,5 +1,7 @@
 import { MongoClient, Db, Collection } from "mongodb";
 import { FlightDetails } from "@/lib/types";
+import fs from "fs";
+import path from "path";
 
 let client: MongoClient | null = null;
 let db: Db | null = null;
@@ -12,11 +14,26 @@ async function getClient(): Promise<MongoClient> {
     throw new Error("MONGODB_URI is not configured");
   }
 
+  // AWS DocumentDB uses strict TLS with a custom CA bundle
+  const isDocDB = uri.includes('docdb.amazonaws.com');
+  const tlsOptions: any = {};
+
+  if (isDocDB) {
+    // Attempt to load the global AWS RDS/DocDB cert bundle
+    const certPath = path.join(process.cwd(), 'global-bundle.pem');
+    if (fs.existsSync(certPath)) {
+      tlsOptions.tls = true;
+      tlsOptions.tlsCAFile = certPath;
+      tlsOptions.retryWrites = false; // DocDB doesn't fully support retryable writes
+    }
+  }
+
   client = new MongoClient(uri, {
     maxPoolSize: 10,
     minPoolSize: 2,
     serverSelectionTimeoutMS: 5000,
     connectTimeoutMS: 10000,
+    ...tlsOptions
   });
 
   await client.connect();

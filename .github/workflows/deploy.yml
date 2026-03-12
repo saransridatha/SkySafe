@@ -1,0 +1,49 @@
+name: Deploy to VPS with Podman
+
+on:
+  push:
+    branches:
+      - main # Change this to your main production branch if different
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Create archive
+        # We tar the repo to make the copy over SSH much faster, excluding unnecessary dirs
+        run: tar -czf release.tar.gz --exclude=.git --exclude=node_modules .
+
+      - name: Copy archive to VPS
+        uses: appleboy/scp-action@vmaster
+        with:
+          host: 158.220.104.108
+          username: root
+          password: ${{ secrets.VPS_PASSWORD }}
+          source: "release.tar.gz"
+          target: "/opt/skysafe"
+
+      - name: Deploy application using Podman
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 158.220.104.108
+          username: root
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            # Ensure target directory exists
+            mkdir -p /opt/skysafe
+            cd /opt/skysafe
+
+            # Extract the new release
+            tar -xzf release.tar.gz
+            rm release.tar.gz
+            
+            # Create the .env file from a GitHub secret
+            echo "${{ secrets.VPS_ENV_FILE }}" > .env
+
+            # Deploy using Podman compose
+            podman-compose down || true
+            podman-compose up -d --build

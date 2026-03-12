@@ -59,15 +59,15 @@ export function FlightPathMap({ pathAnalysis, waypoints }: FlightPathMapProps) {
 
       const routeCoords: [number, number][] = waypoints.map((wp) => [wp[1], wp[0]]);
 
-      L.polyline(routeCoords, { color: "#4f8ff7", weight: 2, opacity: 0.7, dashArray: "6, 4" }).addTo(map);
+      L.polyline(routeCoords, { color: "#3B82F6", weight: 2, opacity: 0.8, dashArray: "6, 4" }).addTo(map);
 
       const origin = waypoints[0];
-      L.circleMarker([origin[1], origin[0]], { radius: 5, fillColor: "#34d399", color: "#34d399", weight: 2, fillOpacity: 0.9 })
+      L.circleMarker([origin[1], origin[0]], { radius: 6, fillColor: "#38BDF8", color: "#38BDF8", weight: 2, fillOpacity: 0.9 })
         .bindPopup("Origin")
         .addTo(map);
 
       const dest = waypoints[waypoints.length - 1];
-      L.circleMarker([dest[1], dest[0]], { radius: 5, fillColor: "#f87171", color: "#f87171", weight: 2, fillOpacity: 0.9 })
+      L.circleMarker([dest[1], dest[0]], { radius: 6, fillColor: "#FB923C", color: "#FB923C", weight: 2, fillOpacity: 0.9 })
         .bindPopup("Destination")
         .addTo(map);
 
@@ -75,13 +75,13 @@ export function FlightPathMap({ pathAnalysis, waypoints }: FlightPathMapProps) {
       const step = waypoints.length > 10 ? Math.floor(waypoints.length / 6) : 1;
       for (let i = step; i < waypoints.length - 1; i += step) {
         const wp = waypoints[i];
-        L.circleMarker([wp[1], wp[0]], { radius: 2.5, fillColor: "#fbbf24", color: "#fbbf24", weight: 1, fillOpacity: 0.5 })
+        L.circleMarker([wp[1], wp[0]], { radius: 3, fillColor: "#3B82F6", color: "#3B82F6", weight: 1, fillOpacity: 0.4 })
           .addTo(map);
       }
 
       pathAnalysis.segments.forEach((seg) => {
         if (seg.riskLevel === "HIGH" || seg.riskLevel === "CRITICAL") {
-          const color = seg.riskLevel === "CRITICAL" ? "#f87171" : "#f97316";
+          const color = seg.riskLevel === "CRITICAL" ? "#DC2626" : "#F97316";
           L.polyline([[seg.from[1], seg.from[0]], [seg.to[1], seg.to[0]]], { color, weight: 4, opacity: 0.5 }).addTo(map);
         }
       });
@@ -100,23 +100,13 @@ export function FlightPathMap({ pathAnalysis, waypoints }: FlightPathMapProps) {
 
   if (mapError) {
     return (
-      <div className="card">
-        <div className="card-header">
-          <div className="card-title"><span className="card-title-icon">🗺️</span> Flight Path Map</div>
-        </div>
-        <div style={{ padding: "2rem", textAlign: "center", color: "var(--text-muted)", fontSize: "0.8125rem" }}>
-          {mapError}
-        </div>
+      <div className="flex items-center justify-center h-full p-8">
+        <p className="font-mono-label text-[10px] text-destructive tracking-wider">{mapError}</p>
       </div>
     );
   }
 
   return (
-    <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-      <div style={{ padding: "1rem 1.5rem 0" }}>
-        <div className="card-title"><span className="card-title-icon">🗺️</span> Flight Path Map</div>
-      </div>
-      <div ref={mapContainerRef} style={{ height: "420px", background: "var(--bg)" }} />
-    </div>
+    <div ref={mapContainerRef} className="w-full h-full min-h-[400px]" style={{ background: "hsl(var(--background))" }} />
   );
 }

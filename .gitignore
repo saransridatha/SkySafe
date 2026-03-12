@@ -42,4 +42,4 @@ next-env.d.ts
 /skysafe.db-journal
 
 # GitHub Actions Workflows
-.github/workflows/ci.yml
+# (deploy.yml is NOT ignored so it can be checked in)

@@ -6,24 +6,12 @@ SkySafe is an advanced risk assessment and situational awareness platform design
 
 The platform integrates multi-source intelligence to evaluate flight safety through the following analytical engines:
 
-*   **Generative Risk Synthesis**: Utilizes Google Gemini 2.0 (Flash) to perform cross-domain analysis of geopolitical, mechanical, and operational factors, producing a weighted risk index (1-10).
-*   **Geospatial Conflict Mapping**: Dynamically evaluates flight trajectories against real-time conflict zones and high-risk airspaces using Leaflet-based visualization.
-*   **Intelligence Aggregation**: Monitors global news cycles and security feeds (via GNews and NewsAPI) to detect emerging threats related to points of departure, arrival, and transit.
+*   **Generative Risk Synthesis**: Utilizes Google Gemini 2.0 (Flash) to perform cross-domain analysis of geopolitical, mechanical, and operational factors, producing a weighted risk index (1-10) with detailed explanations.
+*   **Geospatial Conflict Mapping**: Dynamically evaluates flight trajectories against real-time conflict zones and high-risk airspaces using Leaflet-based visualization and great-circle route generation.
+*   **Intelligence Aggregation**: Monitors global news cycles and security feeds to detect emerging geopolitical threats related to points of departure, arrival, and transit.
 *   **Fleet and Carrier Profiling**: Analyzes historical safety performance, hull loss metrics, and maintenance records of specific aircraft models and airline operators.
-*   **Interactive Visualization**: Provides high-fidelity mapping and data visualization (Recharts) for spatial orientation and threat identification.
-*   **Distributed Caching Layer**: Implements a hybrid caching strategy using LRU (in-memory) and SQLite (persistent) to ensure low-latency performance and API efficiency.
-
-## Risk Scoring Engine
-
-The platform calculates a Safety Risk Score (1-10) by processing five primary data vectors:
-
-1.  **Flight Trajectory**: Real-time position and planned path.
-2.  **Aircraft Profile**: Historical hull loss rates and mechanical reliability.
-3.  **Carrier Performance**: Airline safety ranking and operational risk band.
-4.  **Geospatial Risk**: Proximity to conflict zones and restricted airspaces.
-5.  **Signal Intelligence**: Real-time geopolitical threat levels derived from global news headlines.
-
-The Gemini 2.0 model synthesizes these inputs to provide a confidence-scored risk assessment, including an explanation of primary risk drivers.
+*   **Interactive Visualization**: Provides high-fidelity mapping and data visualization using Recharts and Three.js (React Three Fiber) for spatial orientation and threat identification.
+*   **Resilient Data Pipeline**: Implements a highly durable, multi-tiered caching strategy utilizing LRU (in-memory), SQLite (local persistent), and MongoDB (distributed) to ensure low-latency performance and rate-limit protection for external APIs like AviationStack.
 
 ## Technical Architecture
 
@@ -34,30 +22,18 @@ SkySafe is architected for scalability and reliability, employing a modern micro
 *   **Framework**: Next.js 14 (App Router)
 *   **Language**: TypeScript 5 (Strict Mode)
 *   **Artificial Intelligence**: Google Generative AI (Gemini 2.0 Flash)
-*   **Database/Cache**: Better-SQLite3
-*   **Mapping Engine**: Leaflet / React-Leaflet
+*   **Database/Cache**: Better-SQLite3 & MongoDB
+*   **Mapping & 3D**: Leaflet / React-Leaflet, Three.js / React Three Fiber
 *   **Data Validation**: Zod
-*   **Styling**: Modular CSS with Glassmorphism principles
-
-### API Surface
-
-The platform exposes several internal API endpoints for data orchestration:
-
-| Endpoint | Method | Description |
-| :--- | :--- | :--- |
-| `/api/flight/search` | GET | Search for real-time flight data by number or route. |
-| `/api/risk/score` | POST | Generate a Gemini-powered risk assessment for a specific flight. |
-| `/api/path/analyze` | POST | Perform geospatial analysis of a flight path against conflict zones. |
-| `/api/news` | GET | Retrieve filtered geopolitical intelligence for specific regions. |
-| `/api/aircraft/[icaoType]` | GET | Retrieve safety profiles for specific aircraft models. |
+*   **Styling**: Tailwind CSS with Glassmorphism / HUD principles
 
 ## Development Operations
 
 ### Prerequisites
 
 *   Node.js (Version 20.x or higher)
-*   NPM or Yarn package manager
-*   Docker and Docker Compose (optional for containerized deployment)
+*   NPM
+*   Docker / Podman (for containerized deployment)
 
 ### Installation
 
@@ -79,6 +55,7 @@ The platform exposes several internal API endpoints for data orchestration:
     AVIATIONSTACK_API_KEY=your_aviationstack_key
     GNEWS_API_KEY=your_gnews_key
     NEWSAPI_KEY=your_newsapi_key
+    MONGODB_URI=your_mongodb_connection_string
     ```
 
 ### Execution
@@ -87,15 +64,17 @@ The platform exposes several internal API endpoints for data orchestration:
 *   **Production Build**: `npm run build`
 *   **Static Analysis**: `npm run typecheck`
 
-### Containerization
+### Containerization & Deployment
 
-The platform is fully containerized for production deployment:
+The platform is fully containerized for production deployment and includes automated CI/CD via GitHub Actions.
 
+Run locally using Docker Compose:
 ```bash
 docker compose up --build -d
 ```
 
-The Dockerfile utilizes a multi-stage build process to optimize image size and includes native build tools for `better-sqlite3`.
+**VPS Deployment**:
+The repository includes a GitHub Action (`.github/workflows/deploy.yml`) configured to automatically deploy to a VPS via SSH using `podman-compose` when changes are pushed to the `main` branch.
 
 ## Directory Taxonomy
 
@@ -104,10 +83,11 @@ The Dockerfile utilizes a multi-stage build process to optimize image size and i
 | `/app` | Application routing and server-side page logic. |
 | `/components` | Modular UI components and visualization modules. |
 | `/lib/services` | Domain-specific logic and external API orchestrators. |
-| `/lib/cache` | Performance optimization and data persistence layers. |
-| `/lib/schemas` | Zod validation schemas for API requests and responses. |
-| `/data` | Static datasets for baseline safety profiling and conflict zones. |
+| `/lib/cache` | Performance optimization (LRU) and SQLite persistence layers. |
+| `/lib/db` | MongoDB integration and distributed data layer. |
+| `/data` | Static datasets for baseline safety profiling, flights, and conflict zones. |
 | `/styles` | Global and component-level CSS definitions. |
+| `/.github` | CI/CD workflows for automated Podman deployments. |
 
 ## Disclaimer
 

@@ -2,13 +2,8 @@ import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { Navbar } from "@/components/Navbar";
 import { AuthProvider } from "@/components/AuthProvider";
+import { CrtOverlay } from "@/components/CrtOverlay";
 import "../styles/globals.css";
-import "../styles/navbar.css";
-import "../styles/search-bar.css";
-import "../styles/components.css";
-import "../styles/dashboard.css";
-import "../styles/landing.css";
-import "../styles/explore.css";
 
 export const metadata: Metadata = {
   title: "SkySafe – Flight Risk Intelligence",
@@ -24,13 +19,14 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <meta charSet="utf-8" />
-        <meta name="theme-color" content="#0b0f19" />
+        <meta name="theme-color" content="#030509" />
       </head>
-      <body>
+      <body className="min-h-screen bg-background antialiased">
         <AuthProvider>
+          <CrtOverlay />
           <Navbar />
           {children}
         </AuthProvider>
