@@ -10,6 +10,8 @@ services:
       - .env
     environment:
       - NODE_ENV=production
+      - MARIADB_URI=${MARIADB_URI}
+      - MONGODB_URI=${MONGODB_URI}
     restart: unless-stopped
     depends_on:
       - mariadb

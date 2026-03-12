@@ -6,17 +6,36 @@ function getPool(): mysql.Pool {
   if (pool) return pool;
 
   const uri = process.env.MARIADB_URI;
+  const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build';
+
   if (!uri || uri === "your_mariadb_connection_string_here") {
+    if (isBuildPhase) {
+      console.warn("MARIADB_URI is not available during build phase. Database operations will fail if called.");
+      return null as any;
+    }
+    console.error("MARIADB_URI check failed.");
+    console.error("MARIADB_URI present:", !!process.env.MARIADB_URI);
+    console.error("MARIADB_URI value length:", process.env.MARIADB_URI?.length || 0);
+    console.error("MARIADB_URI is placeholder:", process.env.MARIADB_URI === "your_mariadb_connection_string_here");
+    
+    const mariaKeys = Object.keys(process.env).filter(k => k.toUpperCase().includes("MARIA"));
+    console.error("MARIA-related keys found:", mariaKeys.join(", "));
+    
     throw new Error("MARIADB_URI is not configured");
   }
 
-  pool = mysql.createPool(uri);
-
+  // Strip quotes
+  const cleanUri = uri.startsWith('"') && uri.endsWith('"') ? uri.slice(1, -1) : uri;
+  pool = mysql.createPool(cleanUri);
   return pool;
 }
 
 export async function initUserTable(): Promise<void> {
   const p = getPool();
+  if (!p) {
+    console.warn("Skipping user table initialization: MariaDB pool not available.");
+    return;
+  }
   await p.execute(`
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -64,9 +83,8 @@ export async function createUser(
 
 export async function isMariaDBAvailable(): Promise<boolean> {
   try {
-    const uri = process.env.MARIADB_URI;
-    if (!uri || uri === "your_mariadb_connection_string_here") return false;
     const p = getPool();
+    if (!p) return false;
     await p.execute("SELECT 1");
     return true;
   } catch {

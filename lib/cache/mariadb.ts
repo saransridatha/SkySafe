@@ -9,12 +9,22 @@ async function getPool(): Promise<mysql.Pool> {
     if (pool) return pool;
 
     const uri = process.env.MARIADB_URI;
-    if (!uri) {
+    const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build';
+
+    if (!uri || uri === "your_mariadb_connection_string_here") {
+        if (isBuildPhase) {
+            console.warn("MARIADB_URI (cache) is not available during build phase.");
+            return null as any;
+        }
+        console.error("MARIADB_URI (cache) check failed. Value:", uri ? (uri.substring(0, 10) + "...") : "undefined/empty");
         throw new Error("MARIADB_URI is not configured");
     }
 
+    // Strip quotes
+    const cleanUri = uri.startsWith('"') && uri.endsWith('"') ? uri.slice(1, -1) : uri;
+
     // Create pool
-    pool = mysql.createPool(uri);
+    pool = mysql.createPool(cleanUri);
     return pool;
 }
 
@@ -23,6 +33,10 @@ async function initializeDatabase() {
     if (initialized) return;
 
     const p = await getPool();
+    if (!p) {
+        console.warn("Skipping database initialization: MariaDB pool not available.");
+        return;
+    }
 
     try {
         await p.execute(`
