@@ -4,14 +4,14 @@ import { searchFlight } from "@/lib/services/flightData";
 import { scoreRisk } from "@/lib/services/geminiScorer";
 import { getNewsIntel } from "@/lib/services/newsIntel";
 import { analyzePath } from "@/lib/services/pathRisk";
-import { getRiskReport, setRiskReport, cleanupOldReports } from "@/lib/cache/sqlite";
+import { getRiskReport, setRiskReport, cleanupOldReports } from "@/lib/cache/mariadb";
 import { AggregatedRiskReport } from "@/lib/types";
 
 export async function buildRiskReport(flightQuery: string): Promise<AggregatedRiskReport> {
   const flight = await searchFlight(flightQuery);
   const cacheKey = `${flight.flightNumber}:${new Date().toISOString().slice(0, 10)}`;
 
-  const cached = getRiskReport(cacheKey);
+  const cached = await getRiskReport(cacheKey);
   if (cached) return cached;
 
   const origin = flight.waypoints[0] ?? [0, 0];
@@ -47,8 +47,8 @@ export async function buildRiskReport(flightQuery: string): Promise<AggregatedRi
     generatedAt: new Date().toISOString()
   };
 
-  setRiskReport(cacheKey, report);
-  
+  await setRiskReport(cacheKey, report);
+
   // Background cleanup
   setTimeout(() => {
     try {

@@ -1,7 +1,7 @@
 import flights from "@/data/flights.json";
 import { TTLCache } from "@/lib/cache/lru";
 import { FlightDetails, Coordinate } from "@/lib/types";
-import { getPersistentFlight, setPersistentFlight } from "@/lib/cache/sqlite";
+import { getPersistentFlight, setPersistentFlight } from "@/lib/cache/mariadb";
 import { getMongoFlight, setMongoFlight, isMongoAvailable } from "@/lib/db/mongodb";
 
 type FlightRecord = FlightDetails & { queryKeys: string[] };
@@ -55,17 +55,17 @@ const AIRLINE_MAP: Record<string, { code: string; name: string }> = {
 // Extended airport database with coordinates and country codes
 const AIRPORT_COORDS: Record<string, Coordinate> = {
   DEL: [77.1025, 28.5562], LHR: [-0.4543, 51.4700], JFK: [-73.7781, 40.6413],
-  DXB: [55.3644, 25.2532], SIN: [103.9893, 1.3644],  SYD: [151.1772, -33.9461],
-  FRA: [8.5706, 50.0333],  CDG: [2.5479, 49.0097],   HND: [139.7798, 35.5494],
+  DXB: [55.3644, 25.2532], SIN: [103.9893, 1.3644], SYD: [151.1772, -33.9461],
+  FRA: [8.5706, 50.0333], CDG: [2.5479, 49.0097], HND: [139.7798, 35.5494],
   SFO: [-122.3790, 37.6213], AMS: [4.7683, 52.3105], JNB: [28.2411, -26.1367],
   IAH: [-95.3368, 29.9902], HYD: [78.4294, 17.2403],
   BOM: [72.8679, 19.0896], MAA: [80.1699, 12.9941], BLR: [77.7068, 13.1986],
   CCU: [88.4467, 22.6520], DOH: [51.5654, 25.2609], KWI: [47.9790, 29.2266],
   IST: [28.8141, 40.9769], CAI: [31.4056, 30.1219], NBO: [36.9278, -1.3192],
-  ADD: [38.7993, 8.9778],  ACC: [- 0.1667, 5.6050], LOS: [3.3210, 6.5774],
+  ADD: [38.7993, 8.9778], ACC: [- 0.1667, 5.6050], LOS: [3.3210, 6.5774],
   CPT: [-18.6024, -33.9715], PEK: [116.5975, 40.0725], PVG: [121.8052, 31.1443],
   HKG: [113.9150, 22.3080], ICN: [126.4505, 37.4602], NRT: [140.3860, 35.7647],
-  BKK: [100.7501, 13.6900], KUL: [101.7099, 2.7456],  CGK: [-106.6558, -6.1256],
+  BKK: [100.7501, 13.6900], KUL: [101.7099, 2.7456], CGK: [-106.6558, -6.1256],
   LAX: [-118.4085, 33.9425], ORD: [-87.9073, 41.9742], ATL: [-84.4281, 33.6407],
   MIA: [-80.2870, 25.7959], YYZ: [-79.6306, 43.6777], YVR: [-123.1840, 49.1967],
   GRU: [-46.4731, -23.4356], EZE: [-58.5357, -34.8222], LIM: [-77.1143, -12.0219],
@@ -159,7 +159,7 @@ function greatCircleWaypoints(origin: Coordinate, dest: Coordinate, numPoints: n
   const toDeg = (r: number) => (r * 180) / Math.PI;
 
   const lng1 = toRad(origin[0]), lat1 = toRad(origin[1]);
-  const lng2 = toRad(dest[0]),   lat2 = toRad(dest[1]);
+  const lng2 = toRad(dest[0]), lat2 = toRad(dest[1]);
 
   // Central angle using Vincenty formula (numerically stable)
   const dLat = lat2 - lat1;
@@ -380,7 +380,7 @@ function generateMockFlight(query: string): FlightDetails {
 
 // Cache to both SQLite and MongoDB for maximum durability
 async function persistFlight(key: string, flight: FlightDetails): Promise<void> {
-  setPersistentFlight(key, flight);
+  await setPersistentFlight(key, flight);
   try {
     if (await isMongoAvailable()) {
       await setMongoFlight(key, flight);
@@ -404,8 +404,8 @@ export async function searchFlight(query: string): Promise<FlightDetails> {
   const cached = cache.get(key);
   if (cached) return cached;
 
-  // 2. SQLite persistent cache
-  const persistent = getPersistentFlight(key);
+  // 2. MariaDB persistent cache
+  const persistent = await getPersistentFlight(key);
   if (persistent) {
     // Re-compute waypoints/countries if the cached data has few waypoints (old format)
     if (persistent.waypoints.length <= 6) {
@@ -430,7 +430,7 @@ export async function searchFlight(query: string): Promise<FlightDetails> {
           mongoFlight.waypoints = greatCircleWaypoints(originCoord, destCoord, 24);
           mongoFlight.countries = getRouteCountries(mongoFlight.waypoints, mongoFlight.origin, mongoFlight.destination);
         }
-        setPersistentFlight(key, mongoFlight);
+        await setPersistentFlight(key, mongoFlight);
         cache.set(key, mongoFlight, FLIGHT_TTL_MS);
         return mongoFlight;
       }
