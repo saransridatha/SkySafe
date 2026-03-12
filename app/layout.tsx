@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { Navbar } from "@/components/Navbar";
+import { AuthProvider } from "@/components/AuthProvider";
 import "../styles/globals.css";
 import "../styles/navbar.css";
 import "../styles/search-bar.css";
@@ -29,8 +30,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="theme-color" content="#0b0f19" />
       </head>
       <body>
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

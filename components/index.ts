@@ -7,3 +7,5 @@ export { CountryRiskCard } from "./CountryRiskCard";
 export { DashboardLoadingState } from "./LoadingSkeletons";
 export { SearchBar } from "./SearchBar";
 export { Navbar } from "./Navbar";
+export { AuthProvider } from "./AuthProvider";
+export { AuthModal } from "./AuthModal";

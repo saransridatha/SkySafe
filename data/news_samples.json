@@ -19,6 +19,12 @@
       "source": "World Monitor",
       "url": "https://example.com/ir-1",
       "publishedAt": "2026-03-09T04:00:00Z"
+    },
+    {
+      "title": "Military drone activity reported near commercial air routes",
+      "source": "Aviation Alert",
+      "url": "https://example.com/ir-2",
+      "publishedAt": "2026-03-09T06:00:00Z"
     }
   ],
   "PK": [
@@ -45,6 +51,103 @@
       "publishedAt": "2026-03-09T02:20:00Z"
     }
   ],
+  "UA": [
+    {
+      "title": "Airspace remains restricted over conflict zone",
+      "source": "Aviation Safety Net",
+      "url": "https://example.com/ua-1",
+      "publishedAt": "2026-03-09T01:00:00Z"
+    },
+    {
+      "title": "Missile threat continues to affect overflying routes",
+      "source": "Defense Monitor",
+      "url": "https://example.com/ua-2",
+      "publishedAt": "2026-03-09T03:00:00Z"
+    }
+  ],
+  "SY": [
+    {
+      "title": "Military operations restrict commercial overflights",
+      "source": "Middle East Watch",
+      "url": "https://example.com/sy-1",
+      "publishedAt": "2026-03-09T04:30:00Z"
+    }
+  ],
+  "IQ": [
+    {
+      "title": "Increased military activity near northern airspace corridors",
+      "source": "Gulf News",
+      "url": "https://example.com/iq-1",
+      "publishedAt": "2026-03-09T05:15:00Z"
+    }
+  ],
+  "YE": [
+    {
+      "title": "Security threat impacts Red Sea aviation routes",
+      "source": "Maritime & Air Monitor",
+      "url": "https://example.com/ye-1",
+      "publishedAt": "2026-03-09T02:30:00Z"
+    }
+  ],
+  "SO": [
+    {
+      "title": "Terrorism concerns near Horn of Africa flight corridors",
+      "source": "Africa Watch",
+      "url": "https://example.com/so-1",
+      "publishedAt": "2026-03-09T03:45:00Z"
+    }
+  ],
+  "SD": [
+    {
+      "title": "Conflict escalation affects civilian aviation in Khartoum region",
+      "source": "Sudan Tribune",
+      "url": "https://example.com/sd-1",
+      "publishedAt": "2026-03-09T06:30:00Z"
+    }
+  ],
+  "LY": [
+    {
+      "title": "Airspace restrictions tightened amid ongoing instability",
+      "source": "North Africa Report",
+      "url": "https://example.com/ly-1",
+      "publishedAt": "2026-03-09T07:00:00Z"
+    }
+  ],
+  "RU": [
+    {
+      "title": "Western sanctions impact Russian aviation industry",
+      "source": "Eurasiatics",
+      "url": "https://example.com/ru-1",
+      "publishedAt": "2026-03-09T08:00:00Z"
+    }
+  ],
+  "IL": [
+    {
+      "title": "Security alert issued for regional airspace over conflict",
+      "source": "Regional Monitor",
+      "url": "https://example.com/il-1",
+      "publishedAt": "2026-03-09T04:00:00Z"
+    }
+  ],
+  "LB": [
+    {
+      "title": "Military escalation threatens civilian overflights",
+      "source": "Levant News",
+      "url": "https://example.com/lb-1",
+      "publishedAt": "2026-03-09T05:00:00Z"
+    }
+  ],
   "DE": [],
-  "GB": []
+  "GB": [],
+  "FR": [],
+  "NL": [],
+  "AE": [],
+  "SA": [],
+  "US": [],
+  "JP": [],
+  "SG": [],
+  "AU": [],
+  "IT": [],
+  "ES": [],
+  "CH": []
 }

@@ -20,8 +20,26 @@ type AnalyzeInput = {
 const cache = new TTLCache<PathAnalysis>(300);
 const TTL_MS = 6 * 60 * 60 * 1000;
 
+// Country center coordinates for waypoint-to-country mapping
+const COUNTRY_CENTERS: Record<string, { lat: number; lng: number; radius: number }> = {
+  IN: { lat: 22.0, lng: 78.0, radius: 12 }, PK: { lat: 30.4, lng: 69.3, radius: 7 },
+  AF: { lat: 33.9, lng: 67.7, radius: 5 }, IR: { lat: 32.4, lng: 53.7, radius: 8 },
+  IQ: { lat: 33.2, lng: 43.7, radius: 5 }, TR: { lat: 39.0, lng: 35.2, radius: 7 },
+  SY: { lat: 35.0, lng: 38.0, radius: 3 }, JO: { lat: 31.2, lng: 36.8, radius: 2 },
+  IL: { lat: 31.5, lng: 34.8, radius: 1.5 }, LB: { lat: 33.9, lng: 35.9, radius: 1 },
+  SA: { lat: 24.0, lng: 45.0, radius: 10 }, AE: { lat: 24.5, lng: 54.5, radius: 3 },
+  OM: { lat: 21.5, lng: 57.0, radius: 5 }, YE: { lat: 15.6, lng: 48.5, radius: 5 },
+  EG: { lat: 27.0, lng: 30.0, radius: 7 }, LY: { lat: 27.0, lng: 17.2, radius: 8 },
+  SD: { lat: 15.5, lng: 30.0, radius: 7 }, SO: { lat: 5.2, lng: 46.2, radius: 6 },
+  ET: { lat: 9.0, lng: 39.5, radius: 6 }, KE: { lat: -0.5, lng: 37.9, radius: 5 },
+  DE: { lat: 51.2, lng: 10.4, radius: 4 }, GB: { lat: 54.0, lng: -2.0, radius: 4 },
+  FR: { lat: 46.0, lng: 2.2, radius: 5 }, NL: { lat: 52.1, lng: 5.3, radius: 2 },
+  UA: { lat: 48.4, lng: 31.2, radius: 6 }, RU: { lat: 61.5, lng: 60.0, radius: 25 },
+  US: { lat: 38.0, lng: -97.0, radius: 20 }, CA: { lat: 56.0, lng: -96.0, radius: 20 },
+};
+
 function toKey(input: AnalyzeInput): string {
-  return JSON.stringify(input);
+  return JSON.stringify({ o: input.origin, d: input.destination, c: input.countries });
 }
 
 function pointInPolygon(point: Coordinate, polygon: number[][][]): boolean {
@@ -53,6 +71,25 @@ function intersectsConflictZone(country: string, p1?: Coordinate, p2?: Coordinat
   return features.some((f: any) => f.properties?.country === country);
 }
 
+// Map a waypoint to the closest country from the provided countries list
+function waypointToCountry(wp: Coordinate, countries: string[]): string {
+  const lng = wp[0], lat = wp[1];
+  let best: string | null = null;
+  let bestDist = Infinity;
+
+  for (const code of countries) {
+    const center = COUNTRY_CENTERS[code];
+    if (!center) continue;
+    const dist = Math.sqrt(Math.pow(lat - center.lat, 2) + Math.pow(lng - center.lng, 2));
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = code;
+    }
+  }
+
+  return best || countries[0] || "UN";
+}
+
 export async function analyzePath(input: AnalyzeInput): Promise<PathAnalysis> {
   const cacheKey = toKey(input);
   const cached = cache.get(cacheKey);
@@ -61,21 +98,37 @@ export async function analyzePath(input: AnalyzeInput): Promise<PathAnalysis> {
   const riskRows = countryRisk as CountryRiskRow[];
   const points: Coordinate[] = input.waypoints;
 
-  const segments = points.slice(0, -1).map((from, idx) => {
-    const to = points[idx + 1];
-    // Map segments to countries. If we have N waypoints, we have N-1 segments.
-    // If we have N countries (one for each waypoint), the segment between waypoint i and i+1
-    // is best represented by countries[i+1] (the country it's entering/traversing).
-    const country = input.countries[idx + 1] ?? input.countries[idx] ?? "UN";
-    const baseline = riskRows.find((r) => r.country === country);
+  // Build segments by grouping consecutive waypoints by their country
+  // This creates one segment per country traversal
+  const countrySegments: { from: Coordinate; to: Coordinate; country: string }[] = [];
+
+  if (points.length >= 2) {
+    let prevCountry = waypointToCountry(points[0], input.countries);
+    let segStart = points[0];
+
+    for (let i = 1; i < points.length; i++) {
+      const country = waypointToCountry(points[i], input.countries);
+      if (country !== prevCountry) {
+        // Country changed — close current segment and start new one
+        countrySegments.push({ from: segStart, to: points[i - 1], country: prevCountry });
+        segStart = points[i - 1]; // overlap at border
+        prevCountry = country;
+      }
+    }
+    // Close the final segment
+    countrySegments.push({ from: segStart, to: points[points.length - 1], country: prevCountry });
+  }
+
+  const segments = countrySegments.map((seg) => {
+    const baseline = riskRows.find((r) => r.country === seg.country);
     const baseWeight = baseline?.riskWeight ?? 1;
-    const conflictBoost = intersectsConflictZone(country, from, to) ? 1 : 0;
+    const conflictBoost = intersectsConflictZone(seg.country, seg.from, seg.to) ? 1 : 0;
 
     return {
-      from,
-      to,
-      country,
-      riskLevel: riskBandFromWeight(baseWeight + conflictBoost)
+      from: seg.from,
+      to: seg.to,
+      country: seg.country,
+      riskLevel: riskBandFromWeight(baseWeight + conflictBoost),
     };
   });
 
@@ -88,7 +141,7 @@ export async function analyzePath(input: AnalyzeInput): Promise<PathAnalysis> {
   const output: PathAnalysis = {
     segments,
     conflictZones: conflictZonesMatched,
-    overallPathRisk
+    overallPathRisk,
   };
 
   cache.set(cacheKey, output, TTL_MS);

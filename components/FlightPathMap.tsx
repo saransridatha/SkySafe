@@ -71,10 +71,11 @@ export function FlightPathMap({ pathAnalysis, waypoints }: FlightPathMapProps) {
         .bindPopup("Destination")
         .addTo(map);
 
-      for (let i = 1; i < waypoints.length - 1; i++) {
+      // Show waypoint markers at intervals to avoid clutter (every ~5th point for 20+ waypoints)
+      const step = waypoints.length > 10 ? Math.floor(waypoints.length / 6) : 1;
+      for (let i = step; i < waypoints.length - 1; i += step) {
         const wp = waypoints[i];
-        L.circleMarker([wp[1], wp[0]], { radius: 3, fillColor: "#fbbf24", color: "#fbbf24", weight: 1, fillOpacity: 0.6 })
-          .bindPopup(`Waypoint ${i}`)
+        L.circleMarker([wp[1], wp[0]], { radius: 2.5, fillColor: "#fbbf24", color: "#fbbf24", weight: 1, fillOpacity: 0.5 })
           .addTo(map);
       }
 
