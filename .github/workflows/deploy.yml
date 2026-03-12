@@ -18,7 +18,7 @@ jobs:
         run: tar -czf release.tar.gz --exclude=.git --exclude=node_modules .
 
       - name: Copy archive to VPS
-        uses: appleboy/scp-action@vmaster
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: 158.220.104.108
           username: root
