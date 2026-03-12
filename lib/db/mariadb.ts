@@ -5,23 +5,12 @@ let pool: mysql.Pool | null = null;
 function getPool(): mysql.Pool {
   if (pool) return pool;
 
-  const host = process.env.MARIADB_HOST;
-  if (!host || host === "your_rds_host_here") {
-    throw new Error("MARIADB_HOST is not configured");
+  const uri = process.env.MARIADB_URI;
+  if (!uri || uri === "your_mariadb_connection_string_here") {
+    throw new Error("MARIADB_URI is not configured");
   }
 
-  pool = mysql.createPool({
-    host,
-    port: parseInt(process.env.MARIADB_PORT || "3306", 10),
-    user: process.env.MARIADB_USER,
-    password: process.env.MARIADB_PASSWORD,
-    database: process.env.MARIADB_DATABASE || "skysafe",
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-    connectTimeout: 10000,
-    enableKeepAlive: true,
-  });
+  pool = mysql.createPool(uri);
 
   return pool;
 }
@@ -75,8 +64,8 @@ export async function createUser(
 
 export async function isMariaDBAvailable(): Promise<boolean> {
   try {
-    const host = process.env.MARIADB_HOST;
-    if (!host || host === "your_rds_host_here") return false;
+    const uri = process.env.MARIADB_URI;
+    if (!uri || uri === "your_mariadb_connection_string_here") return false;
     const p = getPool();
     await p.execute("SELECT 1");
     return true;
